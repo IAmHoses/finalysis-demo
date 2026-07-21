@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './StockLookup.css'
+import reactLogo from '../assets/react.svg'
+import viteLogo from '../assets/vite.svg'
+import heroImg from '../assets/hero.png'
+import './StockLookupPage.css'
 
-function StockLookup() {
+function StockLookupPage() {
   const [count, setCount] = useState(0)
 
   return (
@@ -119,4 +119,4 @@ function StockLookup() {
   )
 }
 
-export default StockLookup
+export default StockLookupPage

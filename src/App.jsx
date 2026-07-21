@@ -1,8 +1,8 @@
-import StockLookup from './StockLookup.jsx'
+import StockLookupPage from './pages/StockLookupPage.jsx'
 
 function App() {
   return (
-    <StockLookup />
+    <StockLookupPage />
   )
 }
 
