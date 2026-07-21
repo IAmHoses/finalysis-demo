@@ -1,9 +1,24 @@
 import express from "express";
 import ViteExpress from "vite-express";
+import { DatabaseSync } from 'node:sqlite';
 
 const app = express();
 
-// Your backend API routes go here
+// Set up SQLite database
+const db = new DatabaseSync('users.db');
+db.exec(`
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+  ) STRICT;
+`);
+
+// Backend API routes
+app.get("/api/users", (req, res) => {
+  res.json({ message: `SQLite users.db is open: ${db.isOpen}` });
+});
+
 app.get("/api/hello", (req, res) => {
   res.json({ message: "Hello from the embedded Express app!" });
 });
