@@ -1,9 +1,13 @@
-import StockLookupPage from './pages/StockLookupPage.jsx'
+import { AuthProvider } from './context/AuthContext';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
-    <StockLookupPage />
-  )
+    <AuthProvider>
+      {/* Route management or conditional layout goes here */}
+      <LoginPage />
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
