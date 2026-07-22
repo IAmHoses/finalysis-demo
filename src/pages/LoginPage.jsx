@@ -12,16 +12,17 @@ function LoginPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [signupError, setSignupError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [signupLoading, setSignupLoading] = useState(false);
 
-  const handleLogIn = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoginError('');
     
-    setLoading(true);
+    setLoginLoading(true);
     if (!loginEmail || !loginPassword) {
       setLoginError('Please fill in all fields.');
-      setLoading(false);
+      setLoginLoading(false);
       return;
     }
 
@@ -35,23 +36,23 @@ function LoginPage() {
     } else {
       setLoginError(result.message);
     }
-    setLoading(false);
+    setLoginLoading(false);
   };
 
-  const handleSignUp = async (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     setSignupError('');
     
-    setLoading(true);
+    setSignupLoading(true);
     if (!signupEmail || !signupPassword || !confirmPassword) {
       setSignupError('Please fill in all fields.');
-      setLoading(false);
+      setSignupLoading(false);
       return;
     }
     if ((signupEmail && signupPassword && confirmPassword)
         && (signupPassword !== confirmPassword)) {
       setSignupError('Passwords do not match.');
-      setLoading(false);
+      setSignupLoading(false);
       return;
     }
 
@@ -66,7 +67,7 @@ function LoginPage() {
     } else {
       setSignupError(result.message);
     }
-    setLoading(false);
+    setSignupLoading(false);
   };
 
   return (
@@ -76,7 +77,7 @@ function LoginPage() {
         
         {loginError && <div style={styles.error}>{loginError}</div>}
 
-        <form onSubmit={handleLogIn} style={styles.form}>
+        <form onSubmit={handleLogin} style={styles.form}>
           <div style={styles.inputGroup}>
             <label htmlFor="loginEmail" style={styles.label}>Email Address</label>
             <input
@@ -99,8 +100,8 @@ function LoginPage() {
               style={styles.input}
             />
           </div>
-          <button type="submit" disabled={loading} style={styles.button}>
-            {loading ? 'Authenticating...' : 'Log In'}
+          <button type="submit" disabled={loginLoading} style={styles.button}>
+            {loginLoading ? 'Authenticating...' : 'Log In'}
           </button>
         </form>
       </div>
@@ -110,7 +111,7 @@ function LoginPage() {
         
         {signupError && <div style={styles.error}>{signupError}</div>}
 
-        <form onSubmit={handleSignUp} style={styles.form}>
+        <form onSubmit={handleSignup} style={styles.form}>
           <div style={styles.inputGroup}>
             <label htmlFor="signupEmail" style={styles.label}>Email Address</label>
             <input
@@ -144,8 +145,8 @@ function LoginPage() {
               style={styles.input}
             />
           </div>
-          <button type="submit" disabled={loading} style={styles.button}>
-            {loading ? 'Onboarding...' : 'Register'}
+          <button type="submit" disabled={signupLoading} style={styles.button}>
+            {signupLoading ? 'Registering...' : 'Register'}
           </button>
         </form>
       </div>

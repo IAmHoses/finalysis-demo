@@ -73,8 +73,10 @@ app.post("/api/login", express.json(), async (req, res) => {
 });
 
 app.post("/api/logout", express.json(), (req, res) => {
+    console.log("Logging out user...");
     if (db.isOpen) db.close(); // Close the database connection on logout
-    return res.status(200).res.json({ message: "Logout successful" });
+    console.log("DB closed!");
+    return res.status(200).json({ message: "Logout successful" });
 });
 
 // Test route to check if the database is open. This route can be removed later.
