@@ -1,25 +1,53 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import { useNavigate } from "react-router";
 import { useAuth } from '../context/AuthContext';
-import reactLogo from '../assets/react.svg'
-import viteLogo from '../assets/vite.svg'
-import heroImg from '../assets/hero.png'
-import './StockLookupPage.css'
+import finnhub from 'finnhub';
+import reactLogo from '../assets/react.svg';
+import viteLogo from '../assets/vite.svg';
+import heroImg from '../assets/hero.png';
+import './StockLookupPage.css';
 
 function StockLookupPage() {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const finnhubClient = new finnhub.DefaultApi("d9gkho1r01qq6536nnegd9gkho1r01qq6536nnf0") // Replace this
   const [stockTicker, setStockTicker] = useState('');
   const [stockPrice, setStockPrice] = useState('');
 
   const handleLogout = async (e) => {
     e.preventDefault();
-    
+
     const result = await logout();
     if (result.success) {
       navigate('/login'); // Redirect to StockLookupPage after successful login
     } else {
       alert(`Logout failed: ${result.message}`);
+    }
+  };
+
+  const handleStockLookup = async (e) => {
+    e.preventDefault();
+
+    // setStockTicker('AAPL'); // For testing purposes, you can set a default ticker symbol
+    // if (!stockTicker) {
+    //   alert('Please enter a stock ticker symbol.');
+    //   return;
+    // }
+    try {
+      // Basic financials
+      finnhubClient.companyBasicFinancials("AAPL", "margin", (error, data, response) => {
+          console.log(data)
+    });
+      // const response = await fetch(`https://api.example.com/stocks/${stockTicker}`);
+      // const data = await response.json();
+
+      // if (!response.ok) {
+      //   throw new Error('Stock not found');
+      // }
+      // setStockPrice(data.price);
+      // alert(`The current price of ${stockTicker} is $${stockPrice}`);
+    } catch (error) {
+      alert(`Error fetching stock price: ${error.message}`);
     }
   };
 
@@ -40,9 +68,9 @@ function StockLookupPage() {
         <button
           type="button"
           className="counter"
-          onClick={handleLogout}
+          onClick={handleStockLookup}
         >
-          Search
+          Lookup Stock
         </button>
       </section>
 
