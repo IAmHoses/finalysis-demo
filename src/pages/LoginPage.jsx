@@ -17,8 +17,8 @@ function LoginPage() {
   const handleLogIn = async (e) => {
     e.preventDefault();
     setLoginError('');
+    
     setLoading(true);
-
     if (!loginEmail || !loginPassword) {
       setLoginError('Please fill in all fields.');
       setLoading(false);
@@ -26,14 +26,14 @@ function LoginPage() {
     }
 
     const result = await login(loginEmail, loginPassword);
-    if (!result.success) {
-      setLoginError(result.message);
-    } else {
+    if (result.success) {
       setLoginError('');
       setLoginEmail('');
       setLoginPassword('');
       // Redirect to StockLookupPage after successful login
       navigate('/stock-lookup');
+    } else {
+      setLoginError(result.message);
     }
     setLoading(false);
   };
@@ -41,8 +41,8 @@ function LoginPage() {
   const handleSignUp = async (e) => {
     e.preventDefault();
     setSignupError('');
+    
     setLoading(true);
-
     if (!signupEmail || !signupPassword || !confirmPassword) {
       setSignupError('Please fill in all fields.');
       setLoading(false);
@@ -56,9 +56,6 @@ function LoginPage() {
     }
 
     const result = await signup(signupEmail, signupPassword);
-    if (!result.success) {
-      setSignupError(result.message);
-    } 
     if (result.success) {
       setSignupError('');
       setSignupEmail('');
@@ -66,6 +63,8 @@ function LoginPage() {
       setConfirmPassword('');
       // Alert user of successful registration and prompt them to log in
       alert('Registration successful! Please log in.');
+    } else {
+      setSignupError(result.message);
     }
     setLoading(false);
   };

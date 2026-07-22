@@ -1,11 +1,27 @@
 import { useState } from 'react'
+import { useNavigate } from "react-router";
+import { useAuth } from '../context/AuthContext';
 import reactLogo from '../assets/react.svg'
 import viteLogo from '../assets/vite.svg'
 import heroImg from '../assets/hero.png'
 import './StockLookupPage.css'
 
 function StockLookupPage() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0) // removed unused state variables
+
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogOut = async (e) => {
+    e.preventDefault();
+    
+    const result = await logout();
+    if (result.success) {
+      navigate('/login'); // Redirect to StockLookupPage after successful login
+    } else {
+      alert(`Logout failed: ${result.message}`);
+    }
+  };
 
   return (
     <>

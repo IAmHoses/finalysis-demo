@@ -1,24 +1,37 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router";
+import { AuthProvider } from './context/AuthContext';
 import './index.css'
 import App from './App'
 import LoginPage from './pages/LoginPage';
 import StockLookupPage from './pages/StockLookupPage';
 
-// 1. Client-Side Routes
+const LoginPageWithAuth = () => (
+  <AuthProvider>
+    <LoginPage />
+  </AuthProvider>
+);
+
+const StockLookupPageWithAuth = () => (
+  <AuthProvider>
+    <StockLookupPage />
+  </AuthProvider>
+);
+
+// 2. Client-Side Routes
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />, 
+    element: <App />,
   },
   {
     path: "/login",
-    element: <LoginPage />, 
+    element: <LoginPageWithAuth />,
   },
   {
     path: "/stock-lookup",
-    element: <StockLookupPage />,
+    element: < StockLookupPageWithAuth />,
   },
   // Test route to check if the router is working correctly. This route can be removed later.
   {
