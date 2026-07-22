@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router";
 import { useAuth } from '../context/AuthContext';
 
 function LoginPage() {
-  const { signup, login, logout } = useAuth();
+  const navigate = useNavigate();
+  const { login, signup } = useAuth();
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [signupEmail, setSignupEmail] = useState('');
@@ -12,7 +14,31 @@ function LoginPage() {
   const [signupError, setSignupError] = useState('');
   const [loading, setLoading] = useState(false);
 
-    const handleSignUp = async (e) => {
+  const handleLogIn = async (e) => {
+    e.preventDefault();
+    setLoginError('');
+    setLoading(true);
+
+    if (!loginEmail || !loginPassword) {
+      setLoginError('Please fill in all fields.');
+      setLoading(false);
+      return;
+    }
+
+    const result = await login(loginEmail, loginPassword);
+    if (!result.success) {
+      setLoginError(result.message);
+    } else {
+      setLoginError('');
+      setLoginEmail('');
+      setLoginPassword('');
+      // Redirect to StockLookupPage after successful login
+      navigate('/stock-lookup');
+    }
+    setLoading(false);
+  };
+
+  const handleSignUp = async (e) => {
     e.preventDefault();
     setSignupError('');
     setLoading(true);
@@ -40,30 +66,6 @@ function LoginPage() {
       setConfirmPassword('');
       // Alert user of successful registration and prompt them to log in
       alert('Registration successful! Please log in.');
-    }
-    setLoading(false);
-  };
-
-  const handleLogIn = async (e) => {
-    e.preventDefault();
-    setLoginError('');
-    setLoading(true);
-
-    if (!loginEmail || !loginPassword) {
-      setLoginError('Please fill in all fields.');
-      setLoading(false);
-      return;
-    }
-
-    const result = await login(loginEmail, loginPassword);
-    if (!result.success) {
-      setLoginError(result.message);
-    } else {
-      setLoginError('');
-      setLoginEmail('');
-      setLoginPassword('');
-      // Alert user of successful registration and prompt them to log in
-      alert('Login successful! Redirecting to dashboard...');
     }
     setLoading(false);
   };

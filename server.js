@@ -77,7 +77,7 @@ app.post("/api/logout", express.json(), (req, res) => {
     return res.status(200).res.json({ message: "Logout successful" });
 });
 
-// Test route to check if the database is open
+// Test route to check if the database is open. This route can be removed later.
 app.get("/db/users", (req, res) => {
     res.json({ message: `SQLite users.db is open: ${db.isOpen}` });
 });
