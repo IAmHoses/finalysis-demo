@@ -3,51 +3,82 @@ import { createContext, useContext, useState, useEffect } from 'react';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
+  const [session, setSession] = useState(localStorage.getItem('session') || null);
 
-  useEffect(() => {
-    if (token) {
-      localStorage.setItem('token', token);
-      // Optional: Decode token or fetch user profile data from your API here
-      setUser({ email: localStorage.getItem('user_email') || '' });
+  useEffect(() => { // Persist session state to localStorage on change
+    if (session) {
+      localStorage.setItem('session', session);
     } else {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user_email');
-      setUser(null);
+      localStorage.removeItem('session');
     }
-  }, [token]);
+  }, [session]);
 
-  const login = async (email, password) => {
-    try {
-      // Replace with your real backend API route (e.g., Express, Laravel, etc.)
-      const response = await fetch('https://example.com', {
+  const signup = async (email, password) => {
+    try { // Call backend API to create a new user
+      const response = await fetch('http://localhost:3000/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Authentication failed');
+      if (!response.ok) { // throw backend user registration error
+        throw new Error(data.message || 'User registration failed');
+      } 
+      if (response.ok) { // Return success to LoginPage for alert
+        return { success: true };
       }
-
-      // Store the token and update user profile state
-      setToken(data.token);
-      localStorage.setItem('user_email', email);
-      return { success: true };
+      return { success: false, message: 'Unknown error during signup' };
     } catch (error) {
       return { success: false, message: error.message };
     }
   };
 
-  const logout = () => {
-    setToken(null);
+  const login = async (email, password) => {
+    try { // Call backend API to authenticate user
+      const response = await fetch('http://localhost:3000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+
+      if (!response.ok) { // throw backend user authentication error
+        throw new Error(data.message || 'User authentication failed');
+      }
+      if (response.ok) { // Update session state with response data
+        setSession(data);
+        return { success: true };
+      }
+      return { success: false, message: 'Unknown error during login' };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
+  };
+
+  const logout = async () => {
+    try { // Call backend API to log out user
+      const response = await fetch('http://localhost:3000/api/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const data = await response.json();
+
+      if (!response.ok) { // throw backend user logout error
+        throw new Error(data.message || 'User logout failed');
+      }
+      if (response.ok) { // Clear session state
+        setSession(null);
+        return { success: true };
+      }
+      return { success: false, message: 'Unknown error during logout' };
+    } catch (error) {
+      return { success: false, message: error.message };
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ signup, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 function LoginPage() {
-  const { login } = useAuth();
+  const { signup, login, logout } = useAuth();
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [signupEmail, setSignupEmail] = useState('');
@@ -11,6 +11,38 @@ function LoginPage() {
   const [loginError, setLoginError] = useState('');
   const [signupError, setSignupError] = useState('');
   const [loading, setLoading] = useState(false);
+
+    const handleSignUp = async (e) => {
+    e.preventDefault();
+    setSignupError('');
+    setLoading(true);
+
+    if (!signupEmail || !signupPassword || !confirmPassword) {
+      setSignupError('Please fill in all fields.');
+      setLoading(false);
+      return;
+    }
+    if ((signupEmail && signupPassword && confirmPassword)
+        && (signupPassword !== confirmPassword)) {
+      setSignupError('Passwords do not match.');
+      setLoading(false);
+      return;
+    }
+
+    const result = await signup(signupEmail, signupPassword);
+    if (!result.success) {
+      setSignupError(result.message);
+    } 
+    if (result.success) {
+      setSignupError('');
+      setSignupEmail('');
+      setSignupPassword('');
+      setConfirmPassword('');
+      // Alert user of successful registration and prompt them to log in
+      alert('Registration successful! Please log in.');
+    }
+    setLoading(false);
+  };
 
   const handleLogIn = async (e) => {
     e.preventDefault();
@@ -22,45 +54,16 @@ function LoginPage() {
       setLoading(false);
       return;
     }
-    
-    // TODO: implement login in AuthContext and call it here
-    // const result = await login(loginEmail, loginPassword);
 
+    const result = await login(loginEmail, loginPassword);
     if (!result.success) {
       setLoginError(result.message);
     } else {
-      // Redirect your user or update application view
-      window.location.href = '/dashboard';
-    }
-    setLoading(false);
-  };
-
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    setSignupError('');
-    setLoading(true);
-
-    if (!signupEmail || !signupPassword || !confirmPassword) {
-      setSignupError('Please fill in all fields.');
-      setLoading(false);
-      return;
-    }
-
-    if ((signupEmail && signupPassword && confirmPassword)
-        && (signupPassword !== confirmPassword)) {
-      setSignupError('Passwords do not match.');
-      setLoading(false);
-      return;
-    }
-
-    // TODO: implement signup in AuthContext and call it here
-    // const result = await signup(signupEmail, signupPassword);
-
-    if (!result.success) {
-      setSignupError(result.message);
-    } else {
-      // Redirect your user or update application view
-      window.location.href = '/dashboard';
+      setLoginError('');
+      setLoginEmail('');
+      setLoginPassword('');
+      // Alert user of successful registration and prompt them to log in
+      alert('Login successful! Redirecting to dashboard...');
     }
     setLoading(false);
   };
