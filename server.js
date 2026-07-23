@@ -1,5 +1,6 @@
 import express from "express";
 import ViteExpress from "vite-express";
+import path from "path";
 import { DatabaseSync } from 'node:sqlite';
 import bcrypt from 'bcrypt';
 
@@ -88,5 +89,21 @@ app.get("/hello", (req, res) => {
     res.json({ message: "Hello from the backend!" });
 });
 
-// Let ViteExpress take over the app routing and asset serving
-ViteExpress.listen(app, 3000, () => console.log("Server is listening on port 3000..."));
+// Use environment port if provided (Render sets PORT)
+const port = process.env.PORT || 3000;
+
+if (process.env.NODE_ENV === 'production') {
+    // Serve built static assets from Vite's `dist` directory
+    const root = path.resolve();
+    app.use(express.static(path.join(root, 'dist')));
+
+    // Catch-all to support client-side routing (React Router)
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(root, 'dist', 'index.html'));
+    });
+
+    app.listen(port, () => console.log(`Server is listening on port ${port} (production)`));
+} else {
+    // Development: let ViteExpress handle dev server and HMR
+    ViteExpress.listen(app, port, () => console.log(`Server is listening on port ${port} (dev)`));
+}
