@@ -5,7 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import './index.css'
 import App from './App'
 import LoginPage from './pages/LoginPage';
-import StockLookupPage from './pages/StockLookupPage';
+import QuoteStock from './pages/QuoteStock';
 
 // 1. Wrapped pages with AuthProvider for context access
 function LoginPageWithAuth() {
@@ -16,10 +16,10 @@ function LoginPageWithAuth() {
   );
 }
 
-function StockLookupPageWithAuth() {
+function QuoteStockWithAuth() {
   return (
     <AuthProvider>
-      <StockLookupPage />
+      <QuoteStock />
     </AuthProvider>
   );
 }
@@ -35,8 +35,8 @@ const router = createBrowserRouter([
     element: <LoginPageWithAuth />,
   },
   {
-    path: "/stock-lookup",
-    element: < StockLookupPageWithAuth />,
+    path: "/quote-stock",
+    element: <QuoteStockWithAuth />,
   },
   // Test route to check if the router is working correctly. This route can be removed later.
   {

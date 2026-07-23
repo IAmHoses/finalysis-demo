@@ -36,8 +36,8 @@ function LoginPage() {
       setLoginError('');
       setLoginEmail('');
       setLoginPassword('');
-      // Redirect to StockLookupPage after successful login
-      navigate('/stock-lookup');
+      // Redirect to QuoteStock after successful login
+      navigate('/quote-stock');
     } else {
       setLoginError(result.message);
     }
@@ -79,7 +79,7 @@ function LoginPage() {
     <div className="login-container">
       <div className="login-wrapper">
         <div className="login-header">
-          <h1 className="login-app-title">Stock Lookup</h1>
+          <h1 className="login-app-title">Finalysis</h1>
           <p className="login-subtitle">Sign in or create an account to get started</p>
         </div>
 

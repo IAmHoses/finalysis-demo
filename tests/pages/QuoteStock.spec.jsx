@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
-import StockLookupPage from '../../src/pages/StockLookupPage';
+import QuoteStock from '../../src/pages/QuoteStock';
 import { AuthProvider } from '../../src/context/AuthContext';
 
 // Mock fetch for logout
@@ -29,17 +29,17 @@ vi.mock('finnhub', () => {
   };
 });
 
-const renderStockLookupPage = () => {
+const renderQuoteStock = () => {
   return render(
     <BrowserRouter>
       <AuthProvider>
-        <StockLookupPage />
+        <QuoteStock />
       </AuthProvider>
     </BrowserRouter>
   );
 };
 
-describe('StockLookupPage', () => {
+describe('QuoteStock', () => {
   beforeEach(() => {
     fetch.mockClear();
     mockNavigate.mockClear();
@@ -53,7 +53,7 @@ describe('StockLookupPage', () => {
 
   describe('Page Rendering', () => {
     it('should render the stock lookup page with hero images', () => {
-      renderStockLookupPage();
+      renderQuoteStock();
 
       expect(screen.getByText('Quote Stock')).toBeInTheDocument();
       expect(screen.getByAltText('React logo')).toBeInTheDocument();
@@ -61,26 +61,26 @@ describe('StockLookupPage', () => {
     });
 
     it('should render ticker input field', () => {
-      renderStockLookupPage();
+      renderQuoteStock();
 
       expect(screen.getByLabelText('Ticker')).toBeInTheDocument();
       expect(screen.getByPlaceholderText('AAPL')).toBeInTheDocument();
     });
 
     it('should render search button', () => {
-      renderStockLookupPage();
+      renderQuoteStock();
 
       expect(screen.getByRole('button', { name: /search/i })).toBeInTheDocument();
     });
 
     it('should render logout button', () => {
-      renderStockLookupPage();
+      renderQuoteStock();
 
       expect(screen.getByRole('button', { name: /log out/i })).toBeInTheDocument();
     });
 
     it('should display opening price heading', () => {
-      renderStockLookupPage();
+      renderQuoteStock();
 
       expect(screen.getByText(/opening price/i)).toBeInTheDocument();
     });
@@ -90,7 +90,7 @@ describe('StockLookupPage', () => {
     it('should display alert when no ticker is entered', async () => {
       global.alert = vi.fn();
 
-      renderStockLookupPage();
+      renderQuoteStock();
 
       const searchButton = screen.getByRole('button', { name: /search/i });
       fireEvent.click(searchButton);
@@ -105,7 +105,7 @@ describe('StockLookupPage', () => {
         callback(null, { o: 150.25 });
       });
 
-      renderStockLookupPage();
+      renderQuoteStock();
 
       const tickerInput = screen.getByPlaceholderText('AAPL');
       const searchButton = screen.getByRole('button', { name: /search/i });
@@ -123,7 +123,7 @@ describe('StockLookupPage', () => {
         callback(null, { o: 150.25 });
       });
 
-      renderStockLookupPage();
+      renderQuoteStock();
 
       const tickerInput = screen.getByPlaceholderText('AAPL');
       const searchButton = screen.getByRole('button', { name: /search/i });
@@ -143,7 +143,7 @@ describe('StockLookupPage', () => {
         callback(null, null);
       });
 
-      renderStockLookupPage();
+      renderQuoteStock();
 
       const tickerInput = screen.getByPlaceholderText('AAPL');
       const searchButton = screen.getByRole('button', { name: /search/i });
@@ -165,7 +165,7 @@ describe('StockLookupPage', () => {
         callback(new Error('API Error'));
       });
 
-      renderStockLookupPage();
+      renderQuoteStock();
 
       const tickerInput = screen.getByPlaceholderText('AAPL');
       const searchButton = screen.getByRole('button', { name: /search/i });
@@ -189,7 +189,7 @@ describe('StockLookupPage', () => {
           callback(null, { o: 140.50 });
         });
 
-      renderStockLookupPage();
+      renderQuoteStock();
 
       const tickerInput = screen.getByPlaceholderText('AAPL');
       const searchButton = screen.getByRole('button', { name: /search/i });
@@ -220,7 +220,7 @@ describe('StockLookupPage', () => {
         json: async () => ({ message: 'Logout successful' }),
       });
 
-      renderStockLookupPage();
+      renderQuoteStock();
 
       const logoutButton = screen.getByRole('button', { name: /log out/i });
       fireEvent.click(logoutButton);
@@ -238,7 +238,7 @@ describe('StockLookupPage', () => {
         json: async () => ({ message: 'Logout failed.' }),
       });
 
-      renderStockLookupPage();
+      renderQuoteStock();
 
       const logoutButton = screen.getByRole('button', { name: /log out/i });
       fireEvent.click(logoutButton);
@@ -258,7 +258,7 @@ describe('StockLookupPage', () => {
         json: async () => ({ message: 'Logout failed.' }),
       });
 
-      renderStockLookupPage();
+      renderQuoteStock();
 
       const logoutButton = screen.getByRole('button', { name: /log out/i });
       fireEvent.click(logoutButton);
@@ -275,7 +275,7 @@ describe('StockLookupPage', () => {
         callback(null, { o: 150.25 });
       });
 
-      renderStockLookupPage();
+      renderQuoteStock();
 
       const tickerInput = screen.getByPlaceholderText('AAPL');
       const searchButton = screen.getByRole('button', { name: /search/i });

@@ -5,9 +5,9 @@ import finnhub from 'finnhub';
 import reactLogo from '../assets/react.svg';
 import viteLogo from '../assets/vite.svg';
 import heroImg from '../assets/hero.png';
-import './StockLookupPage.css';
+import './QuoteStock.css';
 
-function StockLookupPage() {
+function QuoteStock() {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const finnhubClient = new finnhub.DefaultApi("d9gkho1r01qq6536nnegd9gkho1r01qq6536nnf0") // Replace this
@@ -20,7 +20,7 @@ function StockLookupPage() {
 
     const result = await logout();
     if (result.success) {
-      navigate('/login'); // Redirect to StockLookupPage after successful login
+      navigate('/login'); // Redirect to QuoteStock after successful login
     } else {
       alert(`Logout failed: ${result.message}`);
     }
@@ -103,4 +103,4 @@ function StockLookupPage() {
   )
 }
 
-export default StockLookupPage
+export default QuoteStock

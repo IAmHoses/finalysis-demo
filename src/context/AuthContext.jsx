@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
       if (!response.ok) { // throw backend user authentication error
         throw new Error(data.message || 'User authentication failed');
       }
-      if (response.ok) { // Return success to LoginPage for redirect -> StockLookupPage
+      if (response.ok) { // Return success to LoginPage for redirect -> QuoteStock
         return { success: true };
       }
       return { success: false, message: 'Unknown error during login' };
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
       if (!response.ok) { // throw backend user logout error
         throw new Error(data.message || 'User logout failed');
       }
-      if (response.ok) { // Return success to StockLookupPage for redirect -> LoginPage
+      if (response.ok) { // Return success to QuoteStock for redirect -> LoginPage
         return { success: true };
       }
       return { success: false, message: 'Unknown error during logout' };

@@ -73,7 +73,7 @@ describe('LoginPage', () => {
       fireEvent.click(loginButton);
 
       await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith('/stock-lookup');
+        expect(mockNavigate).toHaveBeenCalledWith('/quote-stock');
       });
     });
 
@@ -119,7 +119,7 @@ describe('LoginPage', () => {
       expect(screen.getByRole('button', { name: /authenticating/i })).toBeInTheDocument();
 
       await waitFor(() => {
-        expect(mockNavigate).toHaveBeenCalledWith('/stock-lookup');
+        expect(mockNavigate).toHaveBeenCalledWith('/quote-stock');
       });
     });
 
