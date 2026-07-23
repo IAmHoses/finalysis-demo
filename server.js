@@ -84,5 +84,9 @@ app.get("/db/users", (req, res) => {
     res.json({ message: `SQLite users.db is open: ${db.isOpen}` });
 });
 
+app.get("/hello", (req, res) => {
+    res.json({ message: "Hello from the backend!" });
+});
+
 // Let ViteExpress take over the app routing and asset serving
 ViteExpress.listen(app, 3000, () => console.log("Server is listening on port 3000..."));
