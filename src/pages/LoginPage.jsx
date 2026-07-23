@@ -9,9 +9,12 @@ function LoginPage() {
   const [activeTab, setActiveTab] = useState('login');
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [loginShowPassword, setLoginShowPassword] = useState(false);
   const [signupEmail, setSignupEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
+  const [signupShowPassword, setSignupShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmShowPassword, setConfirmShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [signupError, setSignupError] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
@@ -103,28 +106,49 @@ function LoginPage() {
               <form onSubmit={handleLogin} className="login-form">
                 <div className="login-input-group">
                   <label htmlFor="loginEmail" className="login-label">Email Address</label>
-                  <input
-                    id="loginEmail"
-                    type="email"
-                    value={loginEmail}
-                    onChange={(e) => setLoginEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    className="login-input"
-                  />
+                  <div className="login-input-wrapper">
+                    <span className="login-input-icon">✉️</span>
+                    <input
+                      id="loginEmail"
+                      type="email"
+                      value={loginEmail}
+                      onChange={(e) => setLoginEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      className="login-input"
+                    />
+                  </div>
                 </div>
                 <div className="login-input-group">
                   <label htmlFor="loginPassword" className="login-label">Password</label>
-                  <input
-                    id="loginPassword"
-                    type="password"
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="login-input"
-                  />
+                  <div className="login-input-wrapper">
+                    <span className="login-input-icon">🔒</span>
+                    <input
+                      id="loginPassword"
+                      type={loginShowPassword ? 'text' : 'password'}
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="login-input"
+                    />
+                    <button
+                      type="button"
+                      className="login-password-toggle"
+                      onClick={() => setLoginShowPassword(!loginShowPassword)}
+                      aria-label="Toggle password visibility"
+                    >
+                      {loginShowPassword ? '👁️' : '👁️‍🗨️'}
+                    </button>
+                  </div>
                 </div>
                 <button type="submit" disabled={loginLoading} className="login-button">
-                  {loginLoading ? 'Authenticating...' : 'Log In'}
+                  {loginLoading ? (
+                    <>
+                      <span className="login-spinner"></span>
+                      Authenticating...
+                    </>
+                  ) : (
+                    'Log In'
+                  )}
                 </button>
               </form>
             </div>
@@ -137,39 +161,71 @@ function LoginPage() {
               <form onSubmit={handleSignup} className="login-form">
                 <div className="login-input-group">
                   <label htmlFor="signupEmail" className="login-label">Email Address</label>
-                  <input
-                    id="signupEmail"
-                    type="email"
-                    value={signupEmail}
-                    onChange={(e) => setSignupEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    className="login-input"
-                  />
+                  <div className="login-input-wrapper">
+                    <span className="login-input-icon">✉️</span>
+                    <input
+                      id="signupEmail"
+                      type="email"
+                      value={signupEmail}
+                      onChange={(e) => setSignupEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      className="login-input"
+                    />
+                  </div>
                 </div>
                 <div className="login-input-group">
                   <label htmlFor="signupPassword" className="login-label">Password</label>
-                  <input
-                    id="signupPassword"
-                    type="password"
-                    value={signupPassword}
-                    onChange={(e) => setSignupPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="login-input"
-                  />
+                  <div className="login-input-wrapper">
+                    <span className="login-input-icon">🔒</span>
+                    <input
+                      id="signupPassword"
+                      type={signupShowPassword ? 'text' : 'password'}
+                      value={signupPassword}
+                      onChange={(e) => setSignupPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="login-input"
+                    />
+                    <button
+                      type="button"
+                      className="login-password-toggle"
+                      onClick={() => setSignupShowPassword(!signupShowPassword)}
+                      aria-label="Toggle password visibility"
+                    >
+                      {signupShowPassword ? '👁️' : '👁️‍🗨️'}
+                    </button>
+                  </div>
                 </div>
                 <div className="login-input-group">
                   <label htmlFor="confirmPassword" className="login-label">Confirm Password</label>
-                  <input
-                    id="confirmPassword"
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="login-input"
-                  />
+                  <div className="login-input-wrapper">
+                    <span className="login-input-icon">🔒</span>
+                    <input
+                      id="confirmPassword"
+                      type={confirmShowPassword ? 'text' : 'password'}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="login-input"
+                    />
+                    <button
+                      type="button"
+                      className="login-password-toggle"
+                      onClick={() => setConfirmShowPassword(!confirmShowPassword)}
+                      aria-label="Toggle password visibility"
+                    >
+                      {confirmShowPassword ? '👁️' : '👁️‍🗨️'}
+                    </button>
+                  </div>
                 </div>
                 <button type="submit" disabled={signupLoading} className="login-button">
-                  {signupLoading ? 'Registering...' : 'Register'}
+                  {signupLoading ? (
+                    <>
+                      <span className="login-spinner"></span>
+                      Registering...
+                    </>
+                  ) : (
+                    'Register'
+                  )}
                 </button>
               </form>
             </div>

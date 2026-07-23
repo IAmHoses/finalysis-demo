@@ -142,25 +142,65 @@
   letter-spacing: 0.5px;
 }
 
-.login-input {
-  padding: 0.875rem 1rem;
+.login-input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
   border: 2px solid var(--border);
   border-radius: 6px;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.login-input-wrapper:focus-within {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.login-input-icon {
+  padding-left: 1rem;
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.login-input {
+  flex: 1;
+  padding: 0.875rem 0.5rem 0.875rem 0.5rem;
+  border: none;
+  border-radius: 0;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background-color: #ffffff;
+  background-color: transparent;
   color: #000000;
 }
 
 .login-input:focus {
   outline: none;
-  background-color: #ffffff;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.login-input:-webkit-autofill,
+.login-input:-webkit-autofill:hover,
+.login-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #000000 !important;
+  caret-color: #000000;
 }
 
 .login-input::placeholder {
   color: #000000;
+}
+
+.login-password-toggle {
+  padding-right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-password-toggle:hover {
+  transform: scale(1.1);
 }
 
 .login-button {
@@ -176,6 +216,10 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .login-button:hover:not(:disabled) {
@@ -190,6 +234,22 @@
 .login-button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+.login-spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .login-error {

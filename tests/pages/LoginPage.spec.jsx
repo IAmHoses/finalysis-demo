@@ -147,8 +147,20 @@ describe('LoginPage', () => {
   });
 
   describe('Sign Up Form', () => {
-    it('should render sign up form with email, password, and confirm password fields', () => {
+    const getSignupFormElements = () => {
+      const signupEmailInput = screen.getByLabelText('Email Address', { selector: '#signupEmail' });
+      const signupPasswordInput = screen.getByLabelText('Password', { selector: '#signupPassword' });
+      const signupConfirmPasswordInput = screen.getByLabelText('Confirm Password');
+      const registerButton = screen.getByRole('button', { name: /register/i });
+
+      return { signupEmailInput, signupPasswordInput, signupConfirmPasswordInput, registerButton };
+    };
+
+    it('should render sign up form with email, password, and confirm password fields', async () => {
       renderLoginPage();
+
+      const signUpTab = screen.getByRole('button', { name: /sign up/i });
+      await userEvent.click(signUpTab);
 
       expect(screen.getByText('Sign Up')).toBeInTheDocument();
       const emailLabels = screen.getAllByText('Email Address');
@@ -159,6 +171,9 @@ describe('LoginPage', () => {
 
     it('should display error when fields are empty on signup submit', async () => {
       renderLoginPage();
+
+      const signUpTab = screen.getByRole('button', { name: /sign up/i });
+      await userEvent.click(signUpTab);
 
       const registerButton = screen.getByRole('button', { name: /register/i });
       fireEvent.click(registerButton);
@@ -171,14 +186,14 @@ describe('LoginPage', () => {
     it('should display error when passwords do not match', async () => {
       renderLoginPage();
 
-      const signupEmailInputs = screen.getAllByPlaceholderText('you@example.com');
-      const signupPasswordInputs = screen.getAllByPlaceholderText('••••••••');
-      const signupConfirmPasswordInputs = screen.getAllByPlaceholderText('••••••••');
-      const registerButton = screen.getByRole('button', { name: /register/i });
+      const signUpTab = screen.getByRole('button', { name: /sign up/i });
+      await userEvent.click(signUpTab);
 
-      await userEvent.type(signupEmailInputs[1], 'newuser@example.com');
-      await userEvent.type(signupPasswordInputs[1], 'password123');
-      await userEvent.type(signupConfirmPasswordInputs[2], 'differentpassword');
+      const { signupEmailInput, signupPasswordInput, signupConfirmPasswordInput, registerButton } = getSignupFormElements();
+
+      await userEvent.type(signupEmailInput, 'newuser@example.com');
+      await userEvent.type(signupPasswordInput, 'password123');
+      await userEvent.type(signupConfirmPasswordInput, 'differentpassword');
       fireEvent.click(registerButton);
 
       await waitFor(() => {
@@ -196,14 +211,14 @@ describe('LoginPage', () => {
 
       renderLoginPage();
 
-      const signupEmailInputs = screen.getAllByPlaceholderText('you@example.com');
-      const signupPasswordInputs = screen.getAllByPlaceholderText('••••••••');
-      const signupConfirmPasswordInputs = screen.getAllByPlaceholderText('••••••••');
-      const registerButton = screen.getByRole('button', { name: /register/i });
+      const signUpTab = screen.getByRole('button', { name: /sign up/i });
+      await userEvent.click(signUpTab);
 
-      await userEvent.type(signupEmailInputs[1], 'newuser@example.com');
-      await userEvent.type(signupPasswordInputs[1], 'password123');
-      await userEvent.type(signupConfirmPasswordInputs[2], 'password123');
+      const { signupEmailInput, signupPasswordInput, signupConfirmPasswordInput, registerButton } = getSignupFormElements();
+
+      await userEvent.type(signupEmailInput, 'newuser@example.com');
+      await userEvent.type(signupPasswordInput, 'password123');
+      await userEvent.type(signupConfirmPasswordInput, 'password123');
       fireEvent.click(registerButton);
 
       await waitFor(() => {
@@ -219,14 +234,14 @@ describe('LoginPage', () => {
 
       renderLoginPage();
 
-      const signupEmailInputs = screen.getAllByPlaceholderText('you@example.com');
-      const signupPasswordInputs = screen.getAllByPlaceholderText('••••••••');
-      const signupConfirmPasswordInputs = screen.getAllByPlaceholderText('••••••••');
-      const registerButton = screen.getByRole('button', { name: /register/i });
+      const signUpTab = screen.getByRole('button', { name: /sign up/i });
+      await userEvent.click(signUpTab);
 
-      await userEvent.type(signupEmailInputs[1], 'existing@example.com');
-      await userEvent.type(signupPasswordInputs[1], 'password123');
-      await userEvent.type(signupConfirmPasswordInputs[2], 'password123');
+      const { signupEmailInput, signupPasswordInput, signupConfirmPasswordInput, registerButton } = getSignupFormElements();
+
+      await userEvent.type(signupEmailInput, 'existing@example.com');
+      await userEvent.type(signupPasswordInput, 'password123');
+      await userEvent.type(signupConfirmPasswordInput, 'password123');
       fireEvent.click(registerButton);
 
       await waitFor(() => {
@@ -246,14 +261,14 @@ describe('LoginPage', () => {
 
       renderLoginPage();
 
-      const signupEmailInputs = screen.getAllByPlaceholderText('you@example.com');
-      const signupPasswordInputs = screen.getAllByPlaceholderText('••••••••');
-      const signupConfirmPasswordInputs = screen.getAllByPlaceholderText('••••••••');
-      const registerButton = screen.getByRole('button', { name: /register/i });
+      const signUpTab = screen.getByRole('button', { name: /sign up/i });
+      await userEvent.click(signUpTab);
 
-      await userEvent.type(signupEmailInputs[1], 'newuser@example.com');
-      await userEvent.type(signupPasswordInputs[1], 'password123');
-      await userEvent.type(signupConfirmPasswordInputs[2], 'password123');
+      const { signupEmailInput, signupPasswordInput, signupConfirmPasswordInput, registerButton } = getSignupFormElements();
+
+      await userEvent.type(signupEmailInput, 'newuser@example.com');
+      await userEvent.type(signupPasswordInput, 'password123');
+      await userEvent.type(signupConfirmPasswordInput, 'password123');
       fireEvent.click(registerButton);
 
       expect(screen.getByRole('button', { name: /registering/i })).toBeInTheDocument();
@@ -273,34 +288,52 @@ describe('LoginPage', () => {
 
       renderLoginPage();
 
-      const signupEmailInputs = screen.getAllByPlaceholderText('you@example.com');
-      const signupPasswordInputs = screen.getAllByPlaceholderText('••••••••');
-      const signupConfirmPasswordInputs = screen.getAllByPlaceholderText('••••••••');
-      const registerButton = screen.getByRole('button', { name: /register/i });
+      const signUpTab = screen.getByRole('button', { name: /sign up/i });
+      await userEvent.click(signUpTab);
 
-      await userEvent.type(signupEmailInputs[1], 'newuser@example.com');
-      await userEvent.type(signupPasswordInputs[1], 'password123');
-      await userEvent.type(signupConfirmPasswordInputs[2], 'password123');
+      const { signupEmailInput, signupPasswordInput, signupConfirmPasswordInput, registerButton } = getSignupFormElements();
+
+      await userEvent.type(signupEmailInput, 'newuser@example.com');
+      await userEvent.type(signupPasswordInput, 'password123');
+      await userEvent.type(signupConfirmPasswordInput, 'password123');
       fireEvent.click(registerButton);
 
       await waitFor(() => {
-        expect(signupEmailInputs[1].value).toBe('');
-        expect(signupPasswordInputs[1].value).toBe('');
-        expect(signupConfirmPasswordInputs[2].value).toBe('');
+        expect(signupEmailInput).toHaveValue('');
+        expect(signupPasswordInput).toHaveValue('');
+        expect(signupConfirmPasswordInput).toHaveValue('');
       });
     });
   });
 
   describe('Form UI Layout', () => {
-    it('should display both sign in and sign up cards side by side', () => {
+    it('should display tabbed interface with sign in and sign up tabs', () => {
       renderLoginPage();
 
-      const signInCard = screen.getByText('Sign In').closest('div');
-      const signUpCard = screen.getByText('Sign Up').closest('div');
+      const signInTab = screen.getByRole('button', { name: /sign in/i });
+      const signUpTab = screen.getByRole('button', { name: /sign up/i });
 
-      expect(signInCard).toBeInTheDocument();
-      expect(signUpCard).toBeInTheDocument();
-      expect(signInCard).not.toEqual(signUpCard);
+      expect(signInTab).toBeInTheDocument();
+      expect(signUpTab).toBeInTheDocument();
+      expect(signInTab).toHaveClass('active');
+      expect(signUpTab).not.toHaveClass('active');
+    });
+
+    it('should switch between sign in and sign up forms when tabs are clicked', async () => {
+      renderLoginPage();
+
+      const signUpTab = screen.getByRole('button', { name: /sign up/i });
+
+      // Initially, sign in form should be visible
+      expect(screen.getByLabelText('Email Address', { selector: '#loginEmail' })).toBeInTheDocument();
+      expect(screen.queryByLabelText('Email Address', { selector: '#signupEmail' })).not.toBeInTheDocument();
+
+      // Click sign up tab
+      await userEvent.click(signUpTab);
+
+      // Now sign up form should be visible
+      expect(screen.getByLabelText('Email Address', { selector: '#signupEmail' })).toBeInTheDocument();
+      expect(screen.queryByLabelText('Email Address', { selector: '#loginEmail' })).not.toBeInTheDocument();
     });
   });
 });
