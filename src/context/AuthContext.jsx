@@ -3,15 +3,6 @@ import { createContext, useContext, useState, useEffect } from 'react';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [session, setSession] = useState(localStorage.getItem('session') || null);
-
-  useEffect(() => { // Persist session state to localStorage on change
-    if (session) {
-      localStorage.setItem('session', session);
-    } else {
-      localStorage.removeItem('session');
-    }
-  }, [session]);
 
   const signup = async (email, password) => {
     try { // Call backend API to create a new user
@@ -46,8 +37,7 @@ export const AuthProvider = ({ children }) => {
       if (!response.ok) { // throw backend user authentication error
         throw new Error(data.message || 'User authentication failed');
       }
-      if (response.ok) { // Update session state with response data
-        setSession(data);
+      if (response.ok) { // Return success to LoginPage for redirect -> StockLookupPage
         return { success: true };
       }
       return { success: false, message: 'Unknown error during login' };
@@ -67,8 +57,7 @@ export const AuthProvider = ({ children }) => {
       if (!response.ok) { // throw backend user logout error
         throw new Error(data.message || 'User logout failed');
       }
-      if (response.ok) { // Clear session state
-        setSession(null);
+      if (response.ok) { // Return success to StockLookupPage for redirect -> LoginPage
         return { success: true };
       }
       return { success: false, message: 'Unknown error during logout' };
