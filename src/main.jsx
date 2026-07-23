@@ -7,6 +7,7 @@ import App from './App'
 import LoginPage from './pages/LoginPage';
 import StockLookupPage from './pages/StockLookupPage';
 
+// 1. Wrapped pages with AuthProvider for context access
 const LoginPageWithAuth = () => (
   <AuthProvider>
     <LoginPage />
