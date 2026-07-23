@@ -158,7 +158,7 @@ export default LoginPage;
 
 // Inline CSS for clean visual structure out-of-the-box
 const styles = {
-  container: { display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f3f4f6' },
+  container: { display: 'flex', gap: '4em', justifyContent: 'center', alignItems: 'center', height: '100vh' },
   card: { width: '100%', maxWidth: '400px', padding: '2rem', backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' },
   title: { textAlign: 'center', marginBottom: '1.5rem', color: '#1f2937' },
   form: { display: 'flex', flexDirection: 'column', gap: '1.2rem' },

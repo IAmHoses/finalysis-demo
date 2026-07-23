@@ -50,29 +50,17 @@ function StockLookupPage() {
 
   return (
     <>
+      <div className="ticks"></div>
+      
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
           <img src={reactLogo} className="framework" alt="React logo" />
           <img src={viteLogo} className="vite" alt="Vite logo" />
         </div>
-        <div>
-          <h1>Opening Price: {stockPrice}</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={handleLogout}>
-          Log Out
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+        <section id="spacer"></section>
 
-      <section id="spacer">
         <div style={styles.card}>
           <h2 style={styles.title}>Quote Stock</h2>
           
@@ -96,7 +84,21 @@ function StockLookupPage() {
             </button>
           </form>
         </div>
+        <div>
+          <h1>Opening Price: {stockPrice}</h1>
+        </div>
+
+        <section id="spacer"></section>
+        
+        <button
+          type="button"
+          className="counter"
+          onClick={handleLogout}>
+          Log Out
+        </button>
       </section>
+
+      <div className="ticks"></div>
     </>
   )
 }
