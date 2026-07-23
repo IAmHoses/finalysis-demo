@@ -8,17 +8,21 @@ import LoginPage from './pages/LoginPage';
 import StockLookupPage from './pages/StockLookupPage';
 
 // 1. Wrapped pages with AuthProvider for context access
-const LoginPageWithAuth = () => (
-  <AuthProvider>
-    <LoginPage />
-  </AuthProvider>
-);
+function LoginPageWithAuth() {
+  return (
+    <AuthProvider>
+      <LoginPage />
+    </AuthProvider>
+  );
+}
 
-const StockLookupPageWithAuth = () => (
-  <AuthProvider>
-    <StockLookupPage />
-  </AuthProvider>
-);
+function StockLookupPageWithAuth() {
+  return (
+    <AuthProvider>
+      <StockLookupPage />
+    </AuthProvider>
+  );
+}
 
 // 2. Client-Side Routes
 const router = createBrowserRouter([

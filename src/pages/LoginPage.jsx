@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router";
 import { useAuth } from '../context/AuthContext';
+import './LoginPage.css';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -71,81 +72,81 @@ function LoginPage() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>Sign In</h2>
+    <div className="login-container">
+      <div className="login-card">
+        <h2 className="login-title">Sign In</h2>
         
-        {loginError && <div style={styles.error}>{loginError}</div>}
+        {loginError && <div className="login-error">{loginError}</div>}
 
-        <form onSubmit={handleLogin} style={styles.form}>
-          <div style={styles.inputGroup}>
-            <label htmlFor="loginEmail" style={styles.label}>Email Address</label>
+        <form onSubmit={handleLogin} className="login-form">
+          <div className="login-input-group">
+            <label htmlFor="loginEmail" className="login-label">Email Address</label>
             <input
               id="loginEmail"
               type="email"
               value={loginEmail}
               onChange={(e) => setLoginEmail(e.target.value)}
               placeholder="you@example.com"
-              style={styles.input}
+              className="login-input"
             />
           </div>
-          <div style={styles.inputGroup}>
-            <label htmlFor="loginPassword" style={styles.label}>Password</label>
+          <div className="login-input-group">
+            <label htmlFor="loginPassword" className="login-label">Password</label>
             <input
               id="loginPassword"
               type="password"
               value={loginPassword}
               onChange={(e) => setLoginPassword(e.target.value)}
               placeholder="••••••••"
-              style={styles.input}
+              className="login-input"
             />
           </div>
-          <button type="submit" disabled={loginLoading} style={styles.button}>
+          <button type="submit" disabled={loginLoading} className="login-button">
             {loginLoading ? 'Authenticating...' : 'Log In'}
           </button>
         </form>
       </div>
 
-      <div style={styles.card}>
-        <h2 style={styles.title}>Sign Up</h2>
+      <div className="login-card">
+        <h2 className="login-title">Sign Up</h2>
         
-        {signupError && <div style={styles.error}>{signupError}</div>}
+        {signupError && <div className="login-error">{signupError}</div>}
 
-        <form onSubmit={handleSignup} style={styles.form}>
-          <div style={styles.inputGroup}>
-            <label htmlFor="signupEmail" style={styles.label}>Email Address</label>
+        <form onSubmit={handleSignup} className="login-form">
+          <div className="login-input-group">
+            <label htmlFor="signupEmail" className="login-label">Email Address</label>
             <input
               id="signupEmail"
               type="email"
               value={signupEmail}
               onChange={(e) => setSignupEmail(e.target.value)}
               placeholder="you@example.com"
-              style={styles.input}
+              className="login-input"
             />
           </div>
-          <div style={styles.inputGroup}>
-            <label htmlFor="signupPassword" style={styles.label}>Password</label>
+          <div className="login-input-group">
+            <label htmlFor="signupPassword" className="login-label">Password</label>
             <input
               id="signupPassword"
               type="password"
               value={signupPassword}
               onChange={(e) => setSignupPassword(e.target.value)}
               placeholder="••••••••"
-              style={styles.input}
+              className="login-input"
             />
           </div>
-          <div style={styles.inputGroup}>
-            <label htmlFor="confirmPassword" style={styles.label}>Confirm Password</label>
+          <div className="login-input-group">
+            <label htmlFor="confirmPassword" className="login-label">Confirm Password</label>
             <input
               id="confirmPassword"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="••••••••"
-              style={styles.input}
+              className="login-input"
             />
           </div>
-          <button type="submit" disabled={signupLoading} style={styles.button}>
+          <button type="submit" disabled={signupLoading} className="login-button">
             {signupLoading ? 'Registering...' : 'Register'}
           </button>
         </form>
@@ -155,16 +156,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
-// Inline CSS for clean visual structure out-of-the-box
-const styles = {
-  container: { display: 'flex', gap: '4em', justifyContent: 'center', alignItems: 'center', height: '100vh' },
-  card: { width: '100%', maxWidth: '400px', padding: '2rem', backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' },
-  title: { textAlign: 'center', marginBottom: '1.5rem', color: '#1f2937' },
-  form: { display: 'flex', flexDirection: 'column', gap: '1.2rem' },
-  inputGroup: { display: 'flex', flexDirection: 'column', gap: '0.4rem' },
-  label: { fontSize: '0.875rem', fontWeight: '500', color: '#4b5563' },
-  input: { padding: '0.75rem', border: '1px solid #d1d5db', borderRadius: '4px', fontSize: '1rem' },
-  button: { padding: '0.75rem', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '1rem', cursor: 'pointer', fontWeight: '600' },
-  error: { padding: '0.5rem', backgroundColor: '#fee2e2', color: '#991b1b', borderRadius: '4px', fontSize: '0.875rem', textAlign: 'center' }
-};

@@ -61,25 +61,25 @@ function StockLookupPage() {
 
         <section id="spacer"></section>
 
-        <div style={styles.card}>
-          <h2 style={styles.title}>Quote Stock</h2>
+        <div className="stock-card">
+          <h2 className="stock-title">Quote Stock</h2>
           
-          {stockLookupError && <div style={styles.error}>{stockLookupError}</div>}
+          {stockLookupError && <div className="stock-error">{stockLookupError}</div>}
 
-          <form onSubmit={handleStockLookup} style={styles.form}>
-            <div style={styles.inputGroup}>
-              <label htmlFor="stockTicker" style={styles.label}>Ticker</label>
+          <form onSubmit={handleStockLookup} className="stock-form">
+            <div className="stock-input-group">
+              <label htmlFor="stockTicker" className="stock-label">Ticker</label>
               <input
                 id="stockTicker"
                 type="text"
                 value={stockTicker}
                 onChange={(e) => setStockTicker(e.target.value)}
                 placeholder="AAPL"
-                style={styles.input}
+                className="stock-input"
               />
             </div>
             
-            <button type="submit" style={styles.button}>
+            <button type="submit" className="stock-button">
               Search
             </button>
           </form>
@@ -104,15 +104,3 @@ function StockLookupPage() {
 }
 
 export default StockLookupPage
-// Inline CSS for clean visual structure out-of-the-box
-const styles = {
-  container: { display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f3f4f6' },
-  card: { width: '100%', maxWidth: '400px', padding: '2rem', backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' },
-  title: { textAlign: 'center', marginBottom: '1.5rem', color: '#1f2937' },
-  form: { display: 'flex', flexDirection: 'column', gap: '1.2rem' },
-  inputGroup: { display: 'flex', flexDirection: 'column', gap: '0.4rem' },
-  label: { fontSize: '0.875rem', fontWeight: '500', color: '#4b5563' },
-  input: { padding: '0.75rem', border: '1px solid #d1d5db', borderRadius: '4px', fontSize: '1rem' },
-  button: { padding: '0.75rem', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '1rem', cursor: 'pointer', fontWeight: '600' },
-  error: { padding: '0.5rem', backgroundColor: '#fee2e2', color: '#991b1b', borderRadius: '4px', fontSize: '0.875rem', textAlign: 'center' }
-};
