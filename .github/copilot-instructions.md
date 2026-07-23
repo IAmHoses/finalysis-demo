@@ -31,7 +31,11 @@ Practical guidance:
 - If you add backend features, update `package.json` dependencies and keep `npm run dev` semantics intact.
 - Focus on manual verification by running `npm run dev` and visiting `http://localhost:3000`, or use automated tests via `npm run test`.
 
-If you need more detail on routing conventions, API expectations, or how this repo is deployed, ask for the missing context rather than inventing assumptions.
+Deployment
+
+- Production: deployed to [Render](https://render.com) at https://rts-labs-coding-challenge.onrender.com (automated via recent commits).
+- Environment variables: `NODE_ENV` and `PORT` control dev vs. production behavior in `server.js`. In production, the app serves built assets from `dist/` and uses a catch-all to support client-side routing.
+- The build process (`npm run build`) compiles React via Vite; `npm start` runs the production server. Render automatically runs `npm start` after pulling and building.
 
 Testing (what to know)
 

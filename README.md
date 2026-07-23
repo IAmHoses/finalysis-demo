@@ -42,7 +42,11 @@ npm run test
 ```bash
 npm run lint
 ```
+- Start the production server:
 
+```bash
+npm start
+```
 ### Scripts (from `package.json`)
 - `npm run dev` — starts `node server.js`, which launches ViteExpress on port `3000`.
 - `npm run start` — runs `NODE_ENV=production node server.js`.
@@ -50,6 +54,7 @@ npm run lint
 - `npm run build` — runs `vite build`.
 - `npm run preview` — runs `vite preview`.
 - `npm run lint` — runs `oxlint`.
+- `npm start` — runs `NODE_ENV=production node server.js` (serves built assets from `dist/`).
 
 ### Testing and mocking
 - Test runner: Vitest (`tests/` directory). Example tests: `tests/sum.test.js`, `tests/pages/LoginPage.spec.jsx`.
@@ -66,8 +71,17 @@ npm run lint
 - Keep UI state local to components unless adding a deliberate cross-component store.
 - If adding backend routes or new packages, update `package.json` and keep `npm run dev` semantics intact.
 
-### Where to look first
+### Deployment (Production)
+
+- **Live**: https://rts-labs-coding-challenge.onrender.com (automatic deployments via Render).
+- In production mode (`NODE_ENV=production`), the app:
+  - Serves static assets from `dist/` (built by `npm run build`).
+  - Uses a catch-all route to support client-side routing (React Router).
+  - Listens on the port specified by `PORT` environment variable (Render sets this automatically).
+- Build and deployment: Render automatically runs `npm install`, `npm run build`, and then `npm start` on new commits.
+
+Where to look first
 - Frontend entry: `src/main.jsx` and `src/App.jsx`.
 - Auth flow: `src/context/AuthContext.jsx` and `src/pages/LoginPage.jsx`.
-- Backend entry and DB init: `server.js`.
+- Backend entry and DB init: `server.js` (includes production asset serving and environment checks).
 - Tests: `tests/` (see `tests/pages/LoginPage.spec.jsx` for examples of mocks and render wrappers).
