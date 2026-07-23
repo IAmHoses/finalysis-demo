@@ -11,6 +11,7 @@ function StockLookupPage() {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const finnhubClient = new finnhub.DefaultApi("d9gkho1r01qq6536nnegd9gkho1r01qq6536nnf0") // Replace this
+  const [stockLookupError, setStockLookupError] = useState('');
   const [stockTicker, setStockTicker] = useState('');
   const [stockPrice, setStockPrice] = useState('');
 
@@ -28,23 +29,19 @@ function StockLookupPage() {
   const handleStockLookup = async (e) => {
     e.preventDefault();
 
-    // setStockTicker('AAPL'); // For testing purposes, you can set a default ticker symbol
-    // if (!stockTicker) {
-    //   alert('Please enter a stock ticker symbol.');
-    //   return;
-    // }
+    if (!stockTicker) {
+      alert('Please enter a stock ticker symbol.');
+      return;
+    }    
     try {
-      // Basic financials
-      finnhubClient.companyBasicFinancials("AAPL", "margin", (error, data, response) => {
-          console.log(data)
+      // Get the stock price using Finnhub API
+      finnhubClient.quote(stockTicker, (error, data, response) => {
+          if (!data) {
+            throw new Error('Stock not found via finnhub API');
+          }
+          console.log(data);
+          setStockPrice(data.o);
     });
-      // const response = await fetch(`https://api.example.com/stocks/${stockTicker}`);
-      // const data = await response.json();
-
-      // if (!response.ok) {
-      //   throw new Error('Stock not found');
-      // }
-      // setStockPrice(data.price);
       // alert(`The current price of ${stockTicker} is $${stockPrice}`);
     } catch (error) {
       alert(`Error fetching stock price: ${error.message}`);
@@ -60,7 +57,7 @@ function StockLookupPage() {
           <img src={viteLogo} className="vite" alt="Vite logo" />
         </div>
         <div>
-          <h1>Get started</h1>
+          <h1>Opening Price: {stockPrice}</h1>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
@@ -68,21 +65,52 @@ function StockLookupPage() {
         <button
           type="button"
           className="counter"
-          onClick={handleStockLookup}
-        >
-          Lookup Stock
+          onClick={handleLogout}>
+          Log Out
         </button>
       </section>
 
       <div className="ticks"></div>
 
       <section id="spacer">
-        <button onClick={handleLogout}>
-          Logout
-        </button>
+        <div style={styles.card}>
+          <h2 style={styles.title}>Quote Stock</h2>
+          
+          {stockLookupError && <div style={styles.error}>{stockLookupError}</div>}
+
+          <form onSubmit={handleStockLookup} style={styles.form}>
+            <div style={styles.inputGroup}>
+              <label htmlFor="stockTicker" style={styles.label}>Ticker</label>
+              <input
+                id="stockTicker"
+                type="text"
+                value={stockTicker}
+                onChange={(e) => setStockTicker(e.target.value)}
+                placeholder="AAPL"
+                style={styles.input}
+              />
+            </div>
+            
+            <button type="submit" style={styles.button}>
+              Search
+            </button>
+          </form>
+        </div>
       </section>
     </>
   )
 }
 
 export default StockLookupPage
+// Inline CSS for clean visual structure out-of-the-box
+const styles = {
+  container: { display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f3f4f6' },
+  card: { width: '100%', maxWidth: '400px', padding: '2rem', backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' },
+  title: { textAlign: 'center', marginBottom: '1.5rem', color: '#1f2937' },
+  form: { display: 'flex', flexDirection: 'column', gap: '1.2rem' },
+  inputGroup: { display: 'flex', flexDirection: 'column', gap: '0.4rem' },
+  label: { fontSize: '0.875rem', fontWeight: '500', color: '#4b5563' },
+  input: { padding: '0.75rem', border: '1px solid #d1d5db', borderRadius: '4px', fontSize: '1rem' },
+  button: { padding: '0.75rem', backgroundColor: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', fontSize: '1rem', cursor: 'pointer', fontWeight: '600' },
+  error: { padding: '0.5rem', backgroundColor: '#fee2e2', color: '#991b1b', borderRadius: '4px', fontSize: '0.875rem', textAlign: 'center' }
+};
