@@ -6,6 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production node server.js",
     "dev": "node server.js",
+    "test": "vitest",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "oxlint"
@@ -24,7 +25,8 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
     "oxlint": "^1.71.0",
-    "vite": "^8.1.1"
+    "vite": "^8.1.1",
+    "vitest": "^4.1.10"
   },
   "allowScripts": {
     "fsevents@2.3.3": true,
