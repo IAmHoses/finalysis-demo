@@ -61,6 +61,10 @@ function QuoteStock() {
           <p className="stock-subtitle">Search for real-time stock quotes</p>
         </div>
 
+        <div className="stock-result">
+          <h2 className="stock-result-title">Opening Price: {stockPrice}</h2>
+        </div>
+
         <div className="stock-card">
           <div className="stock-content">
             {stockLookupError && <div className="stock-error">{stockLookupError}</div>}
@@ -86,10 +90,6 @@ function QuoteStock() {
               </button>
             </form>
           </div>
-        </div>
-
-        <div className="stock-result">
-          <h2 className="stock-result-title">Opening Price: {stockPrice}</h2>
         </div>
 
         <button

@@ -54,6 +54,12 @@
   border: none;
 }
 
+@media (prefers-color-scheme: light) {
+  .stock-container {
+    background-color: #eef0f4;
+  }
+}
+
 .stock-wrapper {
   width: 100%;
   max-width: 450px;
@@ -96,6 +102,7 @@
 .stock-card {
   background-color: #ffffff;
   border-radius: 12px;
+  border: 1px solid var(--border);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   padding: 0;
   overflow: hidden;
@@ -248,7 +255,7 @@
 .stock-result-title {
   font-size: 2rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-h);
   margin: 0;
 }
 
@@ -266,6 +273,13 @@
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+@media (prefers-color-scheme: light) {
+  .stock-logout-button {
+    background-color: rgba(102, 126, 234, 0.08);
+    border-color: #667eea;
+  }
 }
 
 .stock-logout-button:hover {

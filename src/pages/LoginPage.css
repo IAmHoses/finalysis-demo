@@ -12,6 +12,12 @@
   border: none;
 }
 
+@media (prefers-color-scheme: light) {
+  .login-container {
+    background-color: #eef0f4;
+  }
+}
+
 .login-wrapper {
   width: 100%;
   max-width: 450px;
@@ -52,6 +58,7 @@
 .login-card {
   background-color: #ffffff;
   border-radius: 12px;
+  border: 1px solid var(--border);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   padding: 0;
   overflow: hidden;
