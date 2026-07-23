@@ -1,90 +1,114 @@
-# rts-labs-coding-challenge
+# RTS Labs Coding Challenge
 
-This repository is a small full-stack demo: a Vite-powered React frontend co-located with a lightweight Express backend.
-## Overview
-- Frontend: React (ESM) app built with Vite. Entry: `src/main.jsx`, which configures client-side routes via `react-router`: `/` (`App`), `/login` (`LoginPage`), `/quote-stock` (`QuoteStock`), and `/about` (a test route).
-- Pages live under `src/pages/`: `LoginPage.jsx` (tabbed Sign In / Sign Up form) and `QuoteStock.jsx` (stock ticker lookup + logout), sharing a common purple/blue gradient card theme defined in their respective `.css` files.
-- Backend: embedded Express app in `server.js` served alongside Vite via `vite-express`. Dev entrypoint is `server.js` (the `dev` script runs it directly).
-- Data: a local SQLite database file `users.db` lives in the repo root and is initialized by `server.js`.
+A small full-stack demo app: a React (Vite) frontend with a lightweight Express backend, all running out of a single Node process. It features email/password sign-up & login (backed by SQLite) and a simple stock ticker lookup powered by the Finnhub API.
 
-## Developer quick start
-- Install dependencies:
+**Live demo:** https://rts-labs-coding-challenge.onrender.com
 
-```bash
-npm install
+AI Assistant context is located in `.github/copilot-instructions.md` if you would like to feed it to your model.
+
+## ✨ Features
+
+- **Sign In / Sign Up** — a tabbed auth form (`LoginPage`) with password hashing via `bcrypt` and a local SQLite user store.
+- **Stock Quote Lookup** — search a ticker symbol and see its opening price (`QuoteStock`), styled to match the login page's card/gradient theme.
+- **Client-side routing** via `react-router`, with an embedded Express server that also serves the API and, in production, the built frontend.
+
+## 🗂️ Project structure
+
+```
+server.js            # Express app: auth API, SQLite setup, serves the built frontend in production
+src/
+  main.jsx           # App entry point + route definitions
+  App.jsx             # Landing page ("/")
+  context/
+    AuthContext.jsx   # login/signup/logout logic, calls the backend API
+  pages/
+    LoginPage.jsx      # Sign In / Sign Up form ("/login")
+    QuoteStock.jsx      # Stock ticker lookup ("/quote-stock")
+tests/                # Vitest unit tests (see "Testing" below)
+users.db              # SQLite database file (created automatically)
 ```
 
-- Run the app in development (dev server + embedded backend on port 3000):
+## 🚀 Getting started
 
-```bash
-npm run dev
-```
+1. Install dependencies:
 
-- Build production assets:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run build
-```
+2. Start the app in development mode:
 
-- Preview built assets locally:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run preview
-```
+   This launches the Express server with ViteExpress, serving the app at [http://localhost:3000](http://localhost:3000) (or `$PORT` if set).
 
-- Run tests:
+That's it — the SQLite database (`users.db`) is created automatically on first run.
 
-```bash
-npm run test
-```
+## 📜 Available scripts
 
-- Run lint:
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Starts `server.js`, serving the app in development mode on port `3000` (or `$PORT`). |
+| `npm start` | Starts `server.js` in production mode (serves built assets from `dist/`). Requires `NODE_ENV=production` to be set in the environment — see [Deployment](#-deployment). |
+| `npm run build` | Builds the production frontend bundle with Vite, output to `dist/`. |
+| `npm run preview` | Serves the built `dist/` output locally, for a quick production-like check. |
+| `npm run test` | Runs the Vitest test suite (see [Testing](#-testing)). |
+| `npm run lint` | Lints the codebase with `oxlint`. |
 
-```bash
-npm run lint
-```
-- Start the production server:
+## 🧪 Testing
 
-```bash
-npm start
-```
-### Scripts (from `package.json`)
-- `npm run dev` — starts `node server.js`, which launches ViteExpress on port `3000` (or `process.env.PORT`).
-- `npm run start` — runs `node server.js`. Production behavior (serving `dist/`, catch-all routing) is controlled by the `NODE_ENV=production` environment variable being set externally (e.g., by Render), not by the script itself.
-- `npm run test` — runs Vitest for unit tests in `tests/`.
-- `npm run build` — runs `vite build`.
-- `npm run preview` — runs `vite preview`.
-- `npm run lint` — runs `oxlint`.
+Tests live under `tests/` and run with [Vitest](https://vitest.dev/):
 
-### Testing and mocking
-- Test runner: Vitest (`tests/` directory): `tests/server.test.js`, `tests/setup.js`, `tests/context/AuthContext.spec.jsx`, `tests/pages/LoginPage.spec.jsx`, `tests/pages/QuoteStock.spec.jsx`.
-- React tests use `@testing-library/react` and `@testing-library/user-event`. Common patterns: mocking `fetch` with `vi.fn()`/`vi.mockResolvedValueOnce()`, mocking `react-router` to stub `useNavigate`, and (in `QuoteStock.spec.jsx`) mocking the `finnhub` module to stub the quote API.
-- Components that rely on context or routing are rendered with wrappers in tests (e.g., `BrowserRouter` and `AuthProvider` from `src/context/AuthContext.jsx`).
-- Tests query by accessible role/label/placeholder/alt text rather than CSS classes, so page restyles should preserve that user-facing text.
+- `tests/server.test.js` — backend route tests.
+- `tests/context/AuthContext.spec.jsx` — auth context logic.
+- `tests/pages/LoginPage.spec.jsx` and `tests/pages/QuoteStock.spec.jsx` — page-level UI tests.
 
-### Backend notes
-- `server.js` initializes a SQLite database (`users.db`, table `users`) and exposes auth routes under `/api/*`: `POST /api/signup`, `POST /api/login`, `POST /api/logout`.
-- Two diagnostic routes are not under `/api`: `GET /db/users` (reports whether the DB connection is open) and `GET /hello` (health check).
-- The frontend `AuthContext` expects authentication endpoints at `/api/login`, `/api/signup`, and `/api/logout` (tests mock these calls; the server implements all three).
+A few conventions worth knowing if you're adding tests:
 
-### Conventions and tips for contributors
-- Code is ESM-based (`type: "module"` in `package.json`); use `import`/`export` syntax.
-- Assets are imported via relative paths inside components (e.g., `import heroImg from './assets/hero.png'`).
-- Keep UI state local to components unless adding a deliberate cross-component store.
-- If adding backend routes or new packages, update `package.json` and keep `npm run dev` semantics intact.
+- Components are rendered with the wrappers they need in real usage — typically `BrowserRouter` and `AuthProvider` (from `src/context/AuthContext.jsx`).
+- `fetch` is mocked with `vi.fn()` / `vi.mockResolvedValueOnce()` rather than hitting a real backend.
+- `react-router`'s `useNavigate` is mocked via `vi.mock('react-router', ...)`, and `QuoteStock.spec.jsx` mocks the `finnhub` package to stub quote lookups.
+- Assertions target accessible roles, labels, placeholder text, and alt text rather than CSS classes — so restyling a page shouldn't break its tests, as long as the visible/accessible text stays the same.
 
-### Deployment (Production)
+## 🔌 Backend API
 
-- **Live**: https://rts-labs-coding-challenge.onrender.com (automatic deployments via Render).
-- In production mode (`NODE_ENV=production`), the app:
-  - Serves static assets from `dist/` (built by `npm run build`).
-  - Uses a catch-all route to support client-side routing (React Router).
-  - Listens on the port specified by `PORT` environment variable (Render sets this automatically).
-- Build and deployment: Render automatically runs `npm install`, `npm run build`, and then `npm start` on new commits.
+`server.js` initializes a SQLite database (`users.db`) with a single `users` table, and exposes:
 
-Where to look first
-- Frontend entry: `src/main.jsx` and `src/App.jsx`.
-- Auth flow: `src/context/AuthContext.jsx` and `src/pages/LoginPage.jsx`.
-- Stock lookup page: `src/pages/QuoteStock.jsx` (formerly `StockLookupPage`; watch for stale references to the old name).
-- Backend entry and DB init: `server.js` (includes production asset serving and environment checks).
-- Tests: `tests/` (see `tests/pages/LoginPage.spec.jsx` and `tests/pages/QuoteStock.spec.jsx` for examples of mocks and render wrappers).
+| Method | Route | Description |
+| --- | --- | --- |
+| `POST` | `/api/signup` | Creates a new user (password hashed with bcrypt). Returns `409` if the email is already taken. |
+| `POST` | `/api/login` | Verifies credentials. Returns `404` if the user isn't found, `401` on a password mismatch. |
+| `POST` | `/api/logout` | Closes the SQLite connection and returns success. |
+| `GET` | `/db/users` | Debug route reporting whether the SQLite connection is open. |
+| `GET` | `/hello` | Simple health check. |
+
+Note that `/db/users` and `/hello` are intentionally *not* under `/api` — they're diagnostic routes rather than part of the public API.
+
+## 🛠️ Conventions for contributors
+
+- The codebase is ESM-based (`"type": "module"` in `package.json`) — use `import`/`export` syntax throughout.
+- Assets (images, etc.) are imported via relative paths, e.g. `import heroImg from '../assets/hero.png'`.
+- Keep UI state local to components unless there's a real need for a shared/cross-component store.
+- `LoginPage` and `QuoteStock` share a visual language (CSS variables from `src/index.css`, plus a purple/blue gradient for buttons and cards) — if you restyle one, consider whether the other should match.
+- If you add backend routes or new dependencies, update `package.json` and make sure `npm run dev` still works end-to-end.
+
+## 📦 Deployment
+
+The app is deployed to [Render](https://render.com) and auto-deploys on new commits to `main`:
+
+1. Render runs `npm install` then `npm run build` (producing the `dist/` frontend bundle).
+2. Render runs `npm start` with `NODE_ENV=production` set, so the Express server serves the built frontend from `dist/` and falls back to a catch-all route for client-side routing.
+3. The server listens on the `PORT` environment variable that Render provides automatically.
+
+## 📍 Where to look first
+
+| If you're touching... | Look at... |
+| --- | --- |
+| Routing / app shell | `src/main.jsx`, `src/App.jsx` |
+| Login / sign-up flow | `src/context/AuthContext.jsx`, `src/pages/LoginPage.jsx` |
+| Stock lookup page | `src/pages/QuoteStock.jsx` |
+| Backend routes / DB setup | `server.js` |
+| Test patterns / examples | `tests/pages/LoginPage.spec.jsx`, `tests/pages/QuoteStock.spec.jsx` |
+
