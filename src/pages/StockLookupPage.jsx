@@ -49,57 +49,57 @@ function StockLookupPage() {
   };
 
   return (
-    <>
-      <div className="ticks"></div>
-      
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="stock-container">
+      <div className="stock-wrapper">
+        <div className="stock-header">
+          <div className="hero">
+            <img src={heroImg} className="base" width="170" height="179" alt="" />
+            <img src={reactLogo} className="framework" alt="React logo" />
+            <img src={viteLogo} className="vite" alt="Vite logo" />
+          </div>
+          <h1 className="stock-app-title">Quote Stock</h1>
+          <p className="stock-subtitle">Search for real-time stock quotes</p>
         </div>
-
-        <section id="spacer"></section>
 
         <div className="stock-card">
-          <h2 className="stock-title">Quote Stock</h2>
-          
-          {stockLookupError && <div className="stock-error">{stockLookupError}</div>}
+          <div className="stock-content">
+            {stockLookupError && <div className="stock-error">{stockLookupError}</div>}
 
-          <form onSubmit={handleStockLookup} className="stock-form">
-            <div className="stock-input-group">
-              <label htmlFor="stockTicker" className="stock-label">Ticker</label>
-              <input
-                id="stockTicker"
-                type="text"
-                value={stockTicker}
-                onChange={(e) => setStockTicker(e.target.value)}
-                placeholder="AAPL"
-                className="stock-input"
-              />
-            </div>
-            
-            <button type="submit" className="stock-button">
-              Search
-            </button>
-          </form>
-        </div>
-        <div>
-          <h1>Opening Price: {stockPrice}</h1>
+            <form onSubmit={handleStockLookup} className="stock-form">
+              <div className="stock-input-group">
+                <label htmlFor="stockTicker" className="stock-label">Ticker</label>
+                <div className="stock-input-wrapper">
+                  <span className="stock-input-icon">📈</span>
+                  <input
+                    id="stockTicker"
+                    type="text"
+                    value={stockTicker}
+                    onChange={(e) => setStockTicker(e.target.value)}
+                    placeholder="AAPL"
+                    className="stock-input"
+                  />
+                </div>
+              </div>
+
+              <button type="submit" className="stock-button">
+                Search
+              </button>
+            </form>
+          </div>
         </div>
 
-        <section id="spacer"></section>
-        
+        <div className="stock-result">
+          <h2 className="stock-result-title">Opening Price: {stockPrice}</h2>
+        </div>
+
         <button
           type="button"
-          className="counter"
+          className="stock-logout-button"
           onClick={handleLogout}>
           Log Out
         </button>
-      </section>
-
-      <div className="ticks"></div>
-    </>
+      </div>
+    </div>
   )
 }
 

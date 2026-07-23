@@ -60,7 +60,7 @@
 .login-tabs {
   display: flex;
   border-bottom: 2px solid var(--border);
-  background-color: #ffffff;
+  background-color: #f3f4f6;
 }
 
 .login-tab {
@@ -70,7 +70,7 @@
   background: none;
   font-size: 1rem;
   font-weight: 600;
-  color: var(--text);
+  color: #6b7280;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
@@ -83,6 +83,7 @@
 
 .login-tab.active {
   color: var(--accent);
+  background-color: #ffffff;
 }
 
 .login-tab.active::after {
