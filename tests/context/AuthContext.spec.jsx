@@ -31,7 +31,7 @@ describe('AuthContext', () => {
 
       expect(signupResult.success).toBe(true);
       expect(fetch).toHaveBeenCalledWith(
-        'http://localhost:3000/api/signup',
+        '/api/signup',
         expect.objectContaining({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -91,7 +91,7 @@ describe('AuthContext', () => {
 
       expect(loginResult.success).toBe(true);
       expect(fetch).toHaveBeenCalledWith(
-        'http://localhost:3000/api/login',
+        '/api/login',
         expect.objectContaining({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -169,7 +169,7 @@ describe('AuthContext', () => {
 
       expect(logoutResult.success).toBe(true);
       expect(fetch).toHaveBeenCalledWith(
-        'http://localhost:3000/api/logout',
+        '/api/logout',
         expect.objectContaining({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

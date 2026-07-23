@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (email, password) => {
     try { // Call backend API to create a new user
-      const response = await fetch('http://localhost:3000/api/signup', {
+      const response = await fetch('/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try { // Call backend API to authenticate user
-      const response = await fetch('http://localhost:3000/api/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try { // Call backend API to log out user
-      const response = await fetch('http://localhost:3000/api/logout', {
+      const response = await fetch('/api/logout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
