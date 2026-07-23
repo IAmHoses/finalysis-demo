@@ -52,6 +52,7 @@
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   border: none;
+  box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: light) {
