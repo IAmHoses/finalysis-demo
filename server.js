@@ -98,7 +98,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(root, 'dist')));
 
     // Catch-all to support client-side routing (React Router)
-    app.get('*', (req, res) => {
+    app.use((req, res) => {
         res.sendFile(path.join(root, 'dist', 'index.html'));
     });
 
