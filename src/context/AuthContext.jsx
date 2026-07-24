@@ -5,7 +5,7 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
 
   const signup = async (email, password) => {
-    try { // Call backend API to create a new user
+    try {
       const response = await fetch('/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -13,10 +13,10 @@ export const AuthProvider = ({ children }) => {
       });
       const data = await response.json();
 
-      if (!response.ok) { // throw backend user registration error
+      if (!response.ok) {
         throw new Error(data.message || 'User registration failed');
       } 
-      if (response.ok) { // Return success to LoginPage for alert
+      if (response.ok) {
         return { success: true };
       }
       return { success: false, message: 'Unknown error during signup' };
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
-    try { // Call backend API to authenticate user
+    try {
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -34,10 +34,10 @@ export const AuthProvider = ({ children }) => {
       });
       const data = await response.json();
 
-      if (!response.ok) { // throw backend user authentication error
+      if (!response.ok) {
         throw new Error(data.message || 'User authentication failed');
       }
-      if (response.ok) { // Return success to LoginPage for redirect -> QuoteStock
+      if (response.ok) {
         return { success: true };
       }
       return { success: false, message: 'Unknown error during login' };
@@ -47,17 +47,17 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    try { // Call backend API to log out user
+    try {
       const response = await fetch('/api/logout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
       const data = await response.json();
 
-      if (!response.ok) { // throw backend user logout error
+      if (!response.ok) {
         throw new Error(data.message || 'User logout failed');
       }
-      if (response.ok) { // Return success to QuoteStock for redirect -> LoginPage
+      if (response.ok) {
         return { success: true };
       }
       return { success: false, message: 'Unknown error during logout' };

@@ -36,7 +36,6 @@ function LoginPage() {
       setLoginError('');
       setLoginEmail('');
       setLoginPassword('');
-      // Redirect to QuoteStock after successful login
       navigate('/quote-stock');
     } else {
       setLoginError(result.message);
@@ -67,7 +66,6 @@ function LoginPage() {
       setSignupEmail('');
       setSignupPassword('');
       setConfirmPassword('');
-      // Alert user of successful registration and prompt them to log in
       alert('Registration successful! Please log in.');
     } else {
       setSignupError(result.message);

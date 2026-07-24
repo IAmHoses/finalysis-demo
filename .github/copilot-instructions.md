@@ -3,7 +3,7 @@
 Purpose: help an AI coding agent work productively in this repo by describing the actual architecture, developer commands, and project-specific conventions.
 
 - Project type: Vite-powered React app with an embedded Express backend (`server.js`).
-- Frontend entry: `src/main.jsx` sets up a `react-router` `createBrowserRouter` with routes `/` (`App`), `/login` (`LoginPage`), `/quote-stock` (`QuoteStock`), and `/about` (test route). `LoginPage` and `QuoteStock` are each wrapped in `AuthProvider` via local `*WithAuth` wrapper components.
+- Frontend entry: `src/main.jsx` sets up a `react-router` `createBrowserRouter` with routes `/` (`App`), `/login` (`LoginPage`), and `/quote-stock` (`QuoteStock`). `LoginPage` and `QuoteStock` are each wrapped in `AuthProvider` via local `*WithAuth` wrapper components.
 - Root UI: `src/App.jsx`, which imports assets from `src/assets/` and styles from `src/App.css`.
 - Pages live in `src/pages/`: `LoginPage.jsx`/`LoginPage.css` (tabbed Sign In / Sign Up form) and `QuoteStock.jsx`/`QuoteStock.css` (stock ticker lookup + logout, styled to match `LoginPage`'s card/gradient theme but without tabs). Note: `QuoteStock` was previously named `StockLookupPage` — if you see stale references to that name or a `/stock-lookup` route, update them.
 - Backend entry: `server.js`; it uses `express`, `vite-express`, `bcrypt` (password hashing), and the Node built-in `node:sqlite` module (`DatabaseSync`).
@@ -12,10 +12,8 @@ Purpose: help an AI coding agent work productively in this repo by describing th
 
 Backend routes (actual, from `server.js`):
 - `POST /api/signup` — creates a user (hashes password with bcrypt), 409 if user exists.
-- `POST /api/login` — verifies credentials, 404 if not found, 401 on mismatch.
+- `POST /api/login` — verifies credentials, returns a generic 401 for either an unknown email or a wrong password (avoids user enumeration).
 - `POST /api/logout` — closes the SQLite connection, always returns success.
-- `GET /db/users` — debug route reporting whether the SQLite DB is open (not under `/api`).
-- `GET /hello` — simple health-check route (not under `/api`).
 - In production (`NODE_ENV=production`), Express serves `dist/` statically and uses a catch-all route to support client-side routing.
 
 Developer commands (from `package.json`):
@@ -28,7 +26,7 @@ Developer commands (from `package.json`):
 
 Important patterns:
 - `server.js` is the actual app entrypoint in dev; do not assume `vite` CLI alone is used.
-- The backend and frontend are co-located in the same repo; backend auth routes are exposed under `/api/*`, but some diagnostic routes (`/hello`, `/db/users`) are not.
+- The backend and frontend are co-located in the same repo; backend auth routes are exposed under `/api/*`.
 - React code is ESM-based (`type: "module"` in `package.json`), so use import syntax consistently.
 - Assets are imported via relative paths inside components (example: `import heroImg from '../assets/hero.png'`).
 - Keep UI state local to components unless a real cross-component store is added.

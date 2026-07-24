@@ -5,10 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import LoginPage from '../../src/pages/LoginPage';
 import { AuthProvider } from '../../src/context/AuthContext';
 
-// Mock fetch
 global.fetch = vi.fn();
 
-// Mock useNavigate
 const mockNavigate = vi.fn();
 vi.mock('react-router', () => ({
   useNavigate: () => mockNavigate,

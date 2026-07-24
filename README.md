@@ -79,12 +79,8 @@ A few conventions worth knowing if you're adding tests:
 | Method | Route | Description |
 | --- | --- | --- |
 | `POST` | `/api/signup` | Creates a new user (password hashed with bcrypt). Returns `409` if the email is already taken. |
-| `POST` | `/api/login` | Verifies credentials. Returns `404` if the user isn't found, `401` on a password mismatch. |
+| `POST` | `/api/login` | Verifies credentials. Returns a generic `401` for either an unknown email or a wrong password (avoids leaking which emails are registered). |
 | `POST` | `/api/logout` | Closes the SQLite connection and returns success. |
-| `GET` | `/db/users` | Debug route reporting whether the SQLite connection is open. |
-| `GET` | `/hello` | Simple health check. |
-
-Note that `/db/users` and `/hello` are intentionally *not* under `/api` — they're diagnostic routes rather than part of the public API.
 
 ## 🛠️ Conventions for contributors
 

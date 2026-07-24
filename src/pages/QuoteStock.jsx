@@ -10,7 +10,7 @@ import './QuoteStock.css';
 function QuoteStock() {
   const navigate = useNavigate();
   const { logout } = useAuth();
-  const finnhubClient = new finnhub.DefaultApi("d9gkho1r01qq6536nnegd9gkho1r01qq6536nnf0") // Replace this
+  const finnhubClient = new finnhub.DefaultApi("d9gkho1r01qq6536nnegd9gkho1r01qq6536nnf0") // TODO: move API key to an environment variable
   const [stockLookupError, setStockLookupError] = useState('');
   const [stockTicker, setStockTicker] = useState('');
   const [stockPrice, setStockPrice] = useState('');
@@ -20,7 +20,7 @@ function QuoteStock() {
 
     const result = await logout();
     if (result.success) {
-      navigate('/login'); // Redirect to QuoteStock after successful login
+      navigate('/login');
     } else {
       alert(`Logout failed: ${result.message}`);
     }
@@ -34,15 +34,12 @@ function QuoteStock() {
       return;
     }    
     try {
-      // Get the stock price using Finnhub API
       finnhubClient.quote(stockTicker, (error, data, response) => {
           if (!data) {
             throw new Error('Stock not found via finnhub API');
           }
-          console.log(data);
           setStockPrice(data.o);
     });
-      // alert(`The current price of ${stockTicker} is $${stockPrice}`);
     } catch (error) {
       alert(`Error fetching stock price: ${error.message}`);
     }

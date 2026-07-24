@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { AuthProvider, useAuth } from '../../src/context/AuthContext';
 
-// Mock fetch
 global.fetch = vi.fn();
 
 describe('AuthContext', () => {
@@ -118,10 +117,10 @@ describe('AuthContext', () => {
       expect(loginResult.message).toBe('Invalid credentials.');
     });
 
-    it('should handle user not found error', async () => {
+    it('should handle login error for a nonexistent user', async () => {
       fetch.mockResolvedValueOnce({
         ok: false,
-        json: async () => ({ message: 'User not found.' }),
+        json: async () => ({ message: 'Invalid credentials.' }),
       });
 
       const wrapper = ({ children }) => <AuthProvider>{children}</AuthProvider>;
@@ -133,7 +132,7 @@ describe('AuthContext', () => {
       });
 
       expect(loginResult.success).toBe(false);
-      expect(loginResult.message).toBe('User not found.');
+      expect(loginResult.message).toBe('Invalid credentials.');
     });
 
     it('should handle network errors during login', async () => {

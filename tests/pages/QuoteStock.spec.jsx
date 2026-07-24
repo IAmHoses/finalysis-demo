@@ -5,20 +5,17 @@ import { BrowserRouter } from 'react-router-dom';
 import QuoteStock from '../../src/pages/QuoteStock';
 import { AuthProvider } from '../../src/context/AuthContext';
 
-// Mock fetch for logout
 global.fetch = vi.fn();
 
-// Mock useNavigate
 const mockNavigate = vi.fn();
 vi.mock('react-router', () => ({
   useNavigate: () => mockNavigate,
   ...vi.importActual('react-router'),
 }));
 
-// Create a shared mock quote function that can be updated in tests
+// Declared with `let` so individual tests can override its implementation
 let mockQuoteFn = vi.fn();
 
-// Mock finnhub
 vi.mock('finnhub', () => {
   return {
     default: {

@@ -7,7 +7,6 @@ import App from './App'
 import LoginPage from './pages/LoginPage';
 import QuoteStock from './pages/QuoteStock';
 
-// 1. Wrapped pages with AuthProvider for context access
 function LoginPageWithAuth() {
   return (
     <AuthProvider>
@@ -24,7 +23,6 @@ function QuoteStockWithAuth() {
   );
 }
 
-// 2. Client-Side Routes
 const router = createBrowserRouter([
   {
     path: "/",
@@ -37,11 +35,6 @@ const router = createBrowserRouter([
   {
     path: "/quote-stock",
     element: <QuoteStockWithAuth />,
-  },
-  // Test route to check if the router is working correctly. This route can be removed later.
-  {
-    path: "/about",
-    element: <div>About Page Content</div>,
   },
 ]);
 

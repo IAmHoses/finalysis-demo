@@ -1,10 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import bcrypt from 'bcrypt';
 
-// Mock bcrypt
 vi.mock('bcrypt');
 
-// Mock DatabaseSync
 const mockDb = {
   isOpen: true,
   exec: vi.fn(),
@@ -17,10 +15,8 @@ vi.mock('node:sqlite', () => ({
   DatabaseSync: vi.fn(() => mockDb),
 }));
 
-// Import after mocks are set up
 import('../server.js').catch(err => {
   // Expected to fail on import due to Express binding
-  console.log('Server import expected to fail in test environment');
 });
 
 describe('Backend Authentication Routes', () => {
