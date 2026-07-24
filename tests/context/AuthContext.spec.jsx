@@ -102,7 +102,7 @@ describe('AuthContext', () => {
     it('should handle login error with invalid credentials', async () => {
       fetch.mockResolvedValueOnce({
         ok: false,
-        json: async () => ({ message: 'Invalid credentials.' }),
+        json: async () => ({ message: "Invalid credentials. Sign Up if you don't have an account." }),
       });
 
       const wrapper = ({ children }) => <AuthProvider>{children}</AuthProvider>;
@@ -114,13 +114,13 @@ describe('AuthContext', () => {
       });
 
       expect(loginResult.success).toBe(false);
-      expect(loginResult.message).toBe('Invalid credentials.');
+      expect(loginResult.message).toBe("Invalid credentials. Sign Up if you don't have an account." );
     });
 
     it('should handle login error for a nonexistent user', async () => {
       fetch.mockResolvedValueOnce({
         ok: false,
-        json: async () => ({ message: 'Invalid credentials.' }),
+        json: async () => ({ message: "Invalid credentials. Sign Up if you don't have an account." }),
       });
 
       const wrapper = ({ children }) => <AuthProvider>{children}</AuthProvider>;
@@ -132,7 +132,7 @@ describe('AuthContext', () => {
       });
 
       expect(loginResult.success).toBe(false);
-      expect(loginResult.message).toBe('Invalid credentials.');
+      expect(loginResult.message).toBe("Invalid credentials. Sign Up if you don't have an account.");
     });
 
     it('should handle network errors during login', async () => {

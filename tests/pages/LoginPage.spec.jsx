@@ -78,7 +78,7 @@ describe('LoginPage', () => {
     it('should display error message on login failure', async () => {
       fetch.mockResolvedValueOnce({
         ok: false,
-        json: async () => ({ message: 'Invalid credentials.' }),
+        json: async () => ({ message: "Invalid credentials. Sign Up if you don't have an account." }),
       });
 
       renderLoginPage();
@@ -92,7 +92,7 @@ describe('LoginPage', () => {
       fireEvent.click(loginButton);
 
       await waitFor(() => {
-        expect(screen.getByText('Invalid credentials.')).toBeInTheDocument();
+        expect(screen.getByText("Invalid credentials. Sign Up if you don't have an account.")).toBeInTheDocument();
       });
     });
 

@@ -51,14 +51,14 @@ app.post("/api/login", express.json(), async (req, res) => {
     }
     const existingUser = db.prepare(`SELECT * FROM users WHERE email = ?`).get(email);
     if (!existingUser) {
-        return res.status(401).json({ message: "Invalid credentials." });
+        return res.status(401).json({ message: "Invalid credentials. Sign Up if you don't have an account." });
     }
     const storedHash = db.prepare(`SELECT password FROM users WHERE email = ?`).get(email)?.password;
     const passwordVerified = await verifyPassword(password, storedHash);
     if (passwordVerified) {
         return res.status(200).json({ message: "Login successful", user: email });
     }
-    return res.status(401).json({ message: "Invalid credentials." });
+    return res.status(401).json({ message: "Invalid credentials. Sign Up if you don't have an account." });
 });
 
 app.post("/api/logout", express.json(), (req, res) => {
