@@ -1,4 +1,4 @@
-# AI Assistant Instructions — rts-labs-coding-challenge
+# AI Assistant Instructions — finalysis-demo
 
 Purpose: help an AI coding agent work productively in this repo by describing the actual architecture, developer commands, and project-specific conventions.
 
@@ -42,7 +42,7 @@ Practical guidance:
 
 Deployment
 
-- Production: deployed to [Render](https://render.com) at https://rts-labs-coding-challenge.onrender.com (automated via recent commits).
+- Production: deployed to [Render](https://render.com) at https://finalysis-demo.onrender.com (automated via recent commits).
 - Environment variables: `NODE_ENV` and `PORT` control dev vs. production behavior in `server.js`. In production, the app serves built assets from `dist/` and uses a catch-all to support client-side routing.
 - The build process (`npm run build`) compiles React via Vite; `npm start` runs the production server. Render automatically runs `npm install`, `npm run build`, and then `npm start` on new commits.
 

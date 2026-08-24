@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: rts-labs-coding-challenge
+    name: finalysis-demo
     env: node
     plan: free
     buildCommand: npm run build

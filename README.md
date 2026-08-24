@@ -2,7 +2,7 @@
 
 A small full-stack demo app: a React (Vite) frontend with a lightweight Express backend, all running out of a single Node process. It features email/password sign-up & login (backed by SQLite) and a simple stock ticker lookup powered by the Finnhub API.
 
-**Live demo:** https://rts-labs-coding-challenge.onrender.com
+**Live demo:** https://finalysis-demo.onrender.com
 
 AI Assistant context is located in `.github/copilot-instructions.md` if you would like to feed it to your model.
 
