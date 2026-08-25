@@ -273,6 +273,28 @@
   animation: slideInDown 0.3s ease-out;
 }
 
+.login-disclaimer {
+  margin: 1.5rem 0 0 0;
+  padding: 0.875rem 1.25rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--text-h);
+  opacity: 0.75;
+  box-sizing: border-box;
+}
+
+.security-guarantee {
+  margin: 0 0 1.25rem 0;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--text-h);
+  opacity: 0.85;
+  box-sizing: border-box;
+}
+
 @keyframes slideInDown {
   from {
     opacity: 0;
@@ -304,6 +326,18 @@
 
   .login-input {
     font-size: 16px;
+  }
+
+  .login-disclaimer {
+    margin-top: 1.25rem;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .security-guarantee {
+    margin-bottom: 1rem;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.75rem;
   }
 }
 

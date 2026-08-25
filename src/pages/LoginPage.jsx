@@ -81,6 +81,11 @@ function LoginPage() {
           <p className="login-subtitle">Sign in or create an account to get started</p>
         </div>
 
+        <p className="security-guarantee">
+          ⛨ Passwords are stored using industry-standard security practices, and the database is
+          regularly wiped.
+        </p>
+
         <div className="login-card">
           <div className="login-tabs">
             <button
@@ -229,6 +234,11 @@ function LoginPage() {
             </div>
           )}
         </div>
+
+        <p className="login-disclaimer">
+          <strong>🚨 I RECOMMEND USING FAKE CREDENTIALS WHEN TESTING SIGN UP AND LOGIN FEATURES, 
+            FOR YOUR OWN DIGITAL SAFETY </strong>
+        </p>
       </div>
     </div>
   );
